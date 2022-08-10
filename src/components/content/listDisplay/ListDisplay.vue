@@ -24,6 +24,6 @@ export default {
     overflow-x: hidden;
     display: flex;
     flex-direction: column;
-    height: calc(100vh - 50px - 44px  - 40px);
+    height: calc(100vh - 50px - 44px  - 60px);
   }
 </style>

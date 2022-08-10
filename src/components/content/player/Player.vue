@@ -1,5 +1,5 @@
 <template>
-<audio :src="playUrl" ref="audioRef"   @error="loadError" @timeupdate="updateTime"></audio>
+<audio :src="playUrl" ref="audioRef"   @error="loadError" @timeupdate="updateTime" @durationchange="durationchange"></audio>
   <div class="player" v-if="sequenceList.length>0"  :class="{playerBottomTab:$route.meta.tabBar},{playerBottom:!$route.meta.tabBar}">
     <div class="PlayMsg" @click="playViewShow">
           <div class="songCover"><img :src="sequenceList[currentIndex].al.picUrl" alt="" :class="{musicImgRotate:playing,pause:ifPaused}"></div>
@@ -112,8 +112,14 @@ export default {
         }
       })
     },
+    durationchange(res) {
+      let duration = res.target.duration
+      if (duration > 0) {
+      console.log(duration,parseInt(duration))
+        this.$store.commit('musicPlay/updateDurationTime',parseInt(duration)) 
+      }
+    },
     updateTime() {
-      // console.log(this,108)
       var that = this
       let audioRef = this.$refs['audioRef']
       let time = parseInt(audioRef.currentTime);
@@ -137,6 +143,11 @@ export default {
               if(that.currentIndex<that.sequenceList.length-1) {
                 let currentIndex = that.currentIndex
                 currentIndex++
+                that.$store.commit('musicPlay/setCurrentIndex',currentIndex) 
+                that.$store.commit('musicPlay/setChange', false);
+              }
+              else if(that.currentIndex = that.sequenceList.length-1) {
+                let currentIndex = 0
                 that.$store.commit('musicPlay/setCurrentIndex',currentIndex) 
                 that.$store.commit('musicPlay/setChange', false);
               }
@@ -265,4 +276,5 @@ export default {
   .pause {
     animation-play-state: paused;
   }
+
 </style>

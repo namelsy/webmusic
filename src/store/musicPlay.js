@@ -251,6 +251,7 @@ export default {
     },
     updateDurationTime (state, time) {
         state.durationTime = time;
+        console.log(state.durationTime)
     },
     setChange (state, flag) {
         state.change = flag;

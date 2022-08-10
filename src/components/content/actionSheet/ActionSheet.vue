@@ -1,16 +1,19 @@
 <template>
   <div class="actionSheet" v-if="actionSheetShowFlag"  @click.self="actionSheetHide">
-    <div class="actionSheetList">
-      <ul class="actionSheetListUl">
-        <li @click="addPlayOne">下一首播放</li>
-        <li>收藏</li>
-        <li>下载</li>
-        <li>添加到歌单</li>
-        <li>分享</li>
-        <li>歌曲信息</li>
-      </ul>
-    </div>
+    <transition name="actionSheet" appear>
+      <div class="actionSheetList">
+        <ul class="actionSheetListUl">
+          <li @click="addPlayOne">下一首播放</li>
+          <li>收藏</li>
+          <li>下载</li>
+          <li>添加到歌单</li>
+          <li>分享</li>
+          <li>歌曲信息</li>
+        </ul>
+      </div>
+    </transition>
   </div>
+  
 </template>
 
 <script type="text/ecmascript-6">
@@ -53,7 +56,7 @@ export default {
   .actionSheetList {
     position: fixed;
     width: 90%;
-    height: 50%;
+    height: 52%;
     background: #fff;
     border-radius: 20px;
     left: 5%;
@@ -70,13 +73,29 @@ export default {
     padding: 15px;
     li {
       padding: 10px;
-      margin: 2px;
+      margin: 5px;
       font-size: 17px;
       background: #eee;
-      width: 100%;
+      width: 90%;
       height: 100%;
       text-align: center;
       border-radius: 5px;
+    }
+  }
+
+  //动画
+  .actionSheet-enter-active {
+    animation: actionSheet 0.2s linear;
+  }
+  .actionSheet-leave-active {
+    animation: actionSheet 0.2s linear reverse;
+  }
+  @keyframes actionSheet {
+    from {
+      transform: translateY(100%);
+    }
+    to {
+      transform: translateY(0);
     }
   }
 </style>

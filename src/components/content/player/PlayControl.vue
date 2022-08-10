@@ -56,6 +56,7 @@ import { mapGetters, mapMutations, mapState,useStore } from 'vuex'
 export default {
   data() {
     return {
+      duration: '00:00',
     }
   },
   components: {
@@ -114,13 +115,13 @@ export default {
     watch(store.state.musicPlay.prCurrentTime,newVal => {
         return that.prCurrentTimes = store.state.musicPlay.prCurrentTime
     })
-    watch(store.state.musicPlay.prCurrentTime,newVal => {
-      if(newVal == 100) {
-        if(playMode == 0) {
-          return that.nextSong()
-        }
-      }
-    })
+    // watch(store.state.musicPlay.prCurrentTime,newVal => {
+    //   if(newVal == 100) {
+    //     if(playMode == 0) {
+    //       return that.nextSong()
+    //     }
+    //   }
+    // })
     
   },
   methods: {
@@ -139,7 +140,8 @@ export default {
       // that.$store.commit('musicPlay/updateCurrentTime', time);
     },
     async updatePlayingStatus(status) {
-      let audioRef = this.$parent.$parent.$refs.audioRef
+      console.log(this)
+      let audioRef = this.$parent.$parent.$parent.$refs.audioRef
       try {
         if(audioRef.paused) {
           await audioRef.play()
@@ -186,6 +188,12 @@ export default {
               this.$store.commit('musicPlay/setCurrentIndex',currentIndex) 
               this.$store.commit('musicPlay/setChange', false);
             }
+            else if(this.currentIndex == this.sequenceList.length-1) {
+              let currentIndex = 0
+              this.$store.commit('musicPlay/Cutover', true);
+              this.$store.commit('musicPlay/setCurrentIndex',currentIndex) 
+              this.$store.commit('musicPlay/setChange', false);
+            }
           }
         }
     },
@@ -225,7 +233,7 @@ export default {
     align-items: center;
   }
   .rightDate {
-    color: #777;
+    color: #aaa;
     display: flex;
     justify-content: center;
     align-items: center;
