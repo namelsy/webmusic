@@ -32,7 +32,6 @@ export default {
       this.$store.commit('musicPlay/actionSheetHideFlag',false) 
     },
     addPlayOne() {
-      console.log(this.$attrs.onSelectSong)
       let selectSong = this.$attrs.onSelectSong
       this.$store.dispatch('musicPlay/addOnePlay',selectSong) 
       this.$store.commit('musicPlay/actionSheetHideFlag',false) 

@@ -65,9 +65,7 @@ export default {
     onSearch(value) {
       console(value) 
       searchValue = this.searchValue
-      console.log(searchValue)
       search(searchValue,limit).then(res => {
-        console.log(res)
       })
     },
     // 获取轮播图数据
@@ -75,7 +73,6 @@ export default {
       // 0 PC// 1 android// 2 iphone// 3 ipad 
       let type = 0
       getBannerData(type).then(res=>{
-        console.log(res)
         if(res.data.code == 200) {
           let swiperArray = res.data.banners
           this.swiperArray = swiperArray
@@ -87,7 +84,6 @@ export default {
     recommendedSonglist() {
       let limit=6
       recommendedSonglist(limit).then(res=> {
-        console.log('recommendedSonglist',res)
         if(res.data.code == 200) {
           let songlistData = res.data.result
           for(var i in songlistData) {
@@ -109,7 +105,6 @@ export default {
         let cookie = loginData.cookie
         let limit = 12
         recommendedData(cookie,limit).then(res=> {
-          console.log('recommendedData',res)
         })
       }
       

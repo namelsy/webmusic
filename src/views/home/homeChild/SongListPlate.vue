@@ -60,7 +60,6 @@ export default {
   },
   methods: {
     jumpSongListDetail(id) {
-        console.log(id)
       this.$router.push('/songListDetail/' + id)
     }
   }

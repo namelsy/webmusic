@@ -48,10 +48,7 @@ export default {
   setup() {
     const store = useStore()
     const that = getCurrentInstance()
-    console.log('getCurrentInstance',that)
-    console.log('store',store)
     watch(()=>store.state.musicPlay.currentIndex,(newValue,oldValue)=>{
-      console.log(newValue)
       if(newValue || newValue == 0) {
         if(store.state.musicPlay.cutover) {
           let audioRef = that.ctx.$refs['audioRef']
@@ -110,8 +107,7 @@ export default {
       let audio = this.$refs.audioRef
       audio.addEventListener('error',(res) => {
         if(res.target.error.code == 4) {
-          console.log('错误')
-          this.$store.commit('musicPlay/setPlayingState',false) 
+          this.$store.commit('musicPlay/setPlayingState',false)
           alert('该元素没有支持的来源')
         }
       })
@@ -135,7 +131,6 @@ export default {
       }
       audioRef.onended = function (res) {
         if(res.returnValue == true) {
-          console.log(that.playMode)
           if(that.playMode == 0 ) {
             audioRef.autoplay = true 
             if(that.sequenceList !== undefined && that.sequenceList != null && that.sequenceList.length > 0) {
@@ -155,7 +150,6 @@ export default {
 
             if(that.sequenceList !== undefined && that.sequenceList != null && that.sequenceList.length > 0) {
               if(that.currentIndex<that.sequenceList.length-1) {
-                console.log(that.nextPlay)
                 if(that.nextPlay) {
                   let currentIndex = that.currentIndex
                   currentIndex++
@@ -175,7 +169,6 @@ export default {
               }
             }
           }
-          console.log(audioRef.loop,audioRef.autoplay)
           // this.$store.dispatch('musicPlay/changeMode', 0);
           // that.$store.commit('musicPlay/playEnded', true);
         }

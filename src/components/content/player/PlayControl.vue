@@ -95,7 +95,6 @@ export default {
     },
     duration() {
       let durationTime = this.durationTime
-      console.log(durationTime)
       let long = Math.floor(parseInt(durationTime));
       let minute = Math.floor(durationTime / 60);
       if (minute < 10) {
@@ -112,9 +111,7 @@ export default {
   setup() {
     const store = useStore()
     const that = getCurrentInstance()
-    console.log(store.state.musicPlay.prCurrentTime)
     watch(store.state.musicPlay.prCurrentTime,newVal => {
-      console.log(newVal,store.state.musicPlay.prCurrentTime)
         return that.prCurrentTimes = store.state.musicPlay.prCurrentTime
     })
     watch(store.state.musicPlay.prCurrentTime,newVal => {
@@ -130,12 +127,10 @@ export default {
     seeked() {
       let audioRef = this.$parent.$parent.$refs.audioRef
       audioRef.seeked = function () {
-        console.log(this.durationTime)
       }
     },
     onChange(value) {
       let time = (value * this.durationTime) / 100;
-      console.log(time)
       this.$store.commit('musicPlay/changeTime', time);
       this.$store.commit('musicPlay/setChange', true);
 
@@ -145,7 +140,6 @@ export default {
     },
     async updatePlayingStatus(status) {
       let audioRef = this.$parent.$parent.$refs.audioRef
-      console.log(audioRef.paused)
       try {
         if(audioRef.paused) {
           await audioRef.play()
@@ -158,8 +152,7 @@ export default {
           this.$store.commit('musicPlay/setPlayingState',false) 
         }
       } catch(err) {
-        console.log(err)
-        this.$store.commit('musicPlay/setPlayingState',false) 
+        this.$store.commit('musicPlay/setPlayingState',false)
       }
       
       
@@ -197,7 +190,6 @@ export default {
         }
     },
     PlayMode(type) {
-      console.log(this.playMode)
       let audioRef = this.$parent.$parent.$refs.audioRef
       if(this.playMode == 0) {
          this.$store.dispatch('musicPlay/changeMode', 1);
@@ -210,8 +202,7 @@ export default {
       }
     },
     playListShow() {
-      console.log(this)
-      this.$store.commit('musicPlay/playListHideFlag',true) 
+      this.$store.commit('musicPlay/playListHideFlag',true)
     }
   }
 }

@@ -47,7 +47,6 @@ export default {
     this.id = this.$route.params.id
     this.songListDetail()
     this.dynamic()
-    console.log(this.id)
   },
   methods: {
     backClick() {
@@ -56,14 +55,12 @@ export default {
     songListDetail() {
       let limit = 20
       songListDetail(this.id,limit).then(res => {
-        console.log('songListDetail',res)
         this.songListDetailData = res.data.songs
 
       })
     },
     dynamic() {
       dynamic(this.id).then(res => {
-        console.log('dynamic',res)
       })
     }
   }

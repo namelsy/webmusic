@@ -67,17 +67,14 @@ export default {
     //退出
     logout() {
       loginLogout().then(res => {
-        console.log(res)
       })
     },
     //点击登录
     userLogin(val) {
-      console.log(val)
       let phone = val.phone
       let  password = val.password
       localStorage.removeItem('loginData')
       userLogin(phone,password).then(res=>{
-        console.log(res)
         if(res.data.code == 200) {
           this.$refs.loginHide.loginHide = false
           //用户信息本地缓存
@@ -87,11 +84,9 @@ export default {
           
           //CooKie
           let loginCooKie = res.data.cookie
-          console.log(loginCooKie)
           $cookies.set('loginCooKie',loginCooKie,'1M')
           let uid = loginData.bindings[0].userId
           userDetail(uid).then(res => {
-            console.log(res)
           })
 
 

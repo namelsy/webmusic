@@ -53,8 +53,7 @@ export default {
     playSong(id) {
       let list = this.playList
       let playIndex = (list || []).findIndex((playList) => playList.id === id)
-      console.log(playIndex)
-      this.$store.commit('musicPlay/setCurrentIndex',playIndex) 
+      this.$store.commit('musicPlay/setCurrentIndex',playIndex)
     }
   }
 }

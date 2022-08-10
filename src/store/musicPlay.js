@@ -76,7 +76,6 @@ export default {
             // 添加到源歌曲列表
             playList.splice(currentIndex + 1, 0,list)
             sequenceList.splice(currentIndex + 1, 0,list)
-            console.log(sequenceList)
         }
   
         // 边界情况
@@ -140,7 +139,6 @@ export default {
         // 找到需要被删除的歌曲对应的index
         const sequenceIndex = findIndex(sequenceList, song)
         const playlistIndex = findIndex(playList, song)
-        console.log(sequenceIndex,playlistIndex)
         // 找不到
         if (sequenceIndex < 0 || playList < 0) return
         // 找到删掉
@@ -227,7 +225,6 @@ export default {
     // 设置播放状态
     setPlayingState(state, playing) {
       state.playing = playing
-      console.log('setPlayingState',state.playing)
     },
     // 设置播放模式
     setPlayMode(state, mode) {
@@ -236,7 +233,6 @@ export default {
     // 设置播放索引值
     setCurrentIndex(state, index) {
         state.currentIndex = index
-        console.log(state.currentIndex)
     },
     // 设置全屏状态
     setFullScreen(state, fullScreen) {
@@ -257,7 +253,6 @@ export default {
         state.durationTime = time;
     },
     setChange (state, flag) {
-        console.log(flag)
         state.change = flag;
     },
     updateCurrentTime (state, time) {

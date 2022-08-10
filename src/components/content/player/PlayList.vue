@@ -52,8 +52,7 @@ export default {
     playSong(id) {
       let list = this.sequenceList
       let playIndex = (list || []).findIndex((sequenceList) => sequenceList.id === id)
-      console.log(playIndex)
-      this.$store.commit('musicPlay/setCurrentIndex',playIndex) 
+      this.$store.commit('musicPlay/setCurrentIndex',playIndex)
     },
     removeSong(id) {
       let list = this.sequenceList

@@ -63,7 +63,6 @@ export default {
       let list = this.songListDetailData
       let playIndex = (list || []).findIndex((songListDetailData) => songListDetailData.id === id)
       songDetail(id).then(res => {
-        console.log(res)
         this.$store.commit('musicPlay/Cutover', true);
         this.$store.dispatch('musicPlay/addAllPlay',{list,playIndex}) 
         this.$store.commit('musicPlay/playViewHideFlag',true) 
