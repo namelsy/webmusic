@@ -63,7 +63,7 @@ export default {
   methods: {
       //接口获取数据
     onSearch(value) {
-      console(value) 
+      let searchValue
       searchValue = this.searchValue
       search(searchValue,limit).then(res => {
       })
