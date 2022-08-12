@@ -9,9 +9,6 @@
     <div class="listDisplayItemMsg">
       <slot name="listDisplayItemMsg"></slot>
     </div>
-    <div class="listDisplayItemMv">
-      <slot name="listDisplayItemMv"></slot>
-    </div>
     <div class="listDisplayItemMore">
       <slot name="listDisplayItemMore"></slot>
     </div>
@@ -47,7 +44,7 @@ export default {
       text-overflow: ellipsis;
       // width: calc(100% - 100px);
     }
-    .listDisplayItemNum,.listDisplayItemMv, .listDisplayItemMore{
+    .listDisplayItemNum, .listDisplayItemMore{
       width: 50px;
       height: 100%;
       display: flex;

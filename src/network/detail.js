@@ -74,7 +74,14 @@ export function songDetail(ids){
 	})
 }
 
-
+export function getLyricData(id){
+	return request({
+		url:'/lyric',	
+		params: {
+			id
+		}
+	})
+}
 // //调用此接口 手机号登录 
 // // export function getRecommend(){
 // // 	return request({

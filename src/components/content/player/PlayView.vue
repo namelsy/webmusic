@@ -17,7 +17,7 @@
               <img src="~assets/images/icon/share/more.png" alt="">
           </template>
         </nav-bar>
-        <PlayMsg></PlayMsg>
+        <PlayMsg :lyricObjArr="lyricObjArr"></PlayMsg>
         <PlayControl></PlayControl>
       </div>
     </div>
@@ -29,19 +29,21 @@ import NavBar from '@/components/common/navBar/NavBar'
 import PlayControl from '@/components/content/player/PlayControl'
 import PlayMsg from '@/components/content/player/PlayMsg'
 
+
 import { mapState,useStore } from 'vuex'
 import { watch,getCurrentInstance } from 'vue'
+import { getLyricData } from '@/network/detail'
 export default {
   data() {
     return {
-      picUrl:''
+      picUrl:'',
+      lyricObjArr:[]
     }
   },
   components: {
     NavBar,
     PlayControl,
     PlayMsg,
-    PlayMsg
   },
 
   computed: {
@@ -63,12 +65,18 @@ export default {
         let img = new  Image()
         img.src = store.state.musicPlay.sequenceList[store.state.musicPlay.currentIndex].al.picUrl
         img.onload =function() {
-          return that.data.picUrl = img.src,console.log(that)
+          return that.data.picUrl = img.src
         }
       }
     })  
     
   },
+  created() {
+    if(this.sequenceList.length>0 && this.currentIndex) {
+      this.sequenceList[this.currentIndex].id
+      this.getLyric()
+    }
+  },  
   mounted() {
     if(this.sequenceList.length>0) {
       this.picUrl = this.sequenceList[this.currentIndex].al.picUrl
@@ -79,10 +87,41 @@ export default {
       this.$store.commit('musicPlay/playViewHideFlag',false) 
     },
     playSong(id) {
-      let list = this.playList
-      let playIndex = (list || []).findIndex((playList) => playList.id === id)
+      let list = this.sequenceList
+      let playIndex = (list || []).findIndex((sequenceList) => sequenceList.id === id)
       this.$store.commit('musicPlay/setCurrentIndex',playIndex)
-    }
+    },
+
+    //获取歌词
+    getLyric() {
+      let id = this.sequenceList[this.currentIndex].id
+      console.log(id)
+      getLyricData(id).then(res=>{
+        if(res.data.code == 200) {
+          let lyric = res.data.lrc.lyric
+          console.log(lyric)
+          let regNewLine = /\n/
+          let LineArr = lyric.split(regNewLine)
+          console.log(LineArr)
+          const regTime = /\[\d{2}:\d{2}.\d{2,3}\]/
+          LineArr.forEach(item => {
+            if(item == '') return
+            let obj = {}
+            let time = item.match(regTime)
+            obj.lyric = item.split(']')[1].trim() === '' ? '' : item.split(']')[1].trim()
+            obj.time = time ? time : ''
+            obj.uid = Math.random().toString().slice(-6)
+            if(obj.lyric == '') {
+              console.log('此行没有歌词')
+            }
+            else {
+              this.lyricObjArr.push(obj)
+            }
+          });
+          console.log(this.lyricObjArr)
+        }
+      })
+    },
   }
 }
 </script>

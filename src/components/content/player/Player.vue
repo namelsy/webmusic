@@ -51,6 +51,7 @@ export default {
     watch(()=>store.state.musicPlay.currentIndex,(newValue,oldValue)=>{
       if(newValue || newValue == 0) {
         if(store.state.musicPlay.cutover) {
+
           let audioRef = that.ctx.$refs['audioRef']
           audioRef.autoplay == false && (audioRef.autoplay = true )
           store.commit('musicPlay/updateCurrentTime', 0);
@@ -158,7 +159,6 @@ export default {
             audioRef.play()
           }
           else if(that.playMode == 2) {
-
             if(that.sequenceList !== undefined && that.sequenceList != null && that.sequenceList.length > 0) {
               if(that.currentIndex<that.sequenceList.length-1) {
                 if(that.nextPlay) {

@@ -17,13 +17,16 @@ export default {
 }
 </script>
 
-<style scoped>
+<style scoped lang="less">
   .listDisplay {
-    padding: 15px 0 45px 0;
     overflow-y: scroll;
     overflow-x: hidden;
     display: flex;
     flex-direction: column;
-    height: calc(100vh - 50px - 44px  - 60px);
+    /* height: calc(100vh - 50px - 44px  - 60px); */
+    height: 100%;
+    >:last-child {
+       margin-bottom: 46px;
+    }
   }
 </style>
