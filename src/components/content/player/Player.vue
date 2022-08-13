@@ -25,9 +25,9 @@ import PlayList from './PlayList'
 import PlayView from './PlayView'
 
 // vueX
-import { mapMutations, mapState,useStore,mapGetters } from 'vuex'
+import { mapState,useStore,mapGetters } from 'vuex'
 
-import {ref,watch,getCurrentInstance,provide} from 'vue'
+import {watch,getCurrentInstance} from 'vue'
 export default {
   data() {
     return {

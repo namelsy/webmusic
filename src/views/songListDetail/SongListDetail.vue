@@ -30,7 +30,6 @@ import MainListDisplay from './songListDetailChild/MainListDisplay'
 import Player from '@/components/content/player/Player'
 
 import {songListDetail,dynamic} from "network/detail"
-import store from '@/store'
 export default {
   name: 'SongListDetail',
   data() {
@@ -58,7 +57,6 @@ export default {
       let limit = 20
       songListDetail(this.id,limit).then(res => {
         this.songListDetailData = res.data.songs
-
       })
     },
     dynamic() {

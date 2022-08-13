@@ -19,7 +19,7 @@
 import ListDisplay from '../listDisplay/ListDisplay'
 import ListDisplayItem from '../listDisplay/ListDisplayItem'
 
-import { mapGetters, mapMutations, mapState,useStore } from 'vuex'
+import { mapGetters, mapState,useStore } from 'vuex'
 import { watch,getCurrentInstance } from 'vue'
 export default {
   data() {
