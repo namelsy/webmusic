@@ -17,7 +17,7 @@
     
   </div>
   <play-list ref="playListShowHide"></play-list>
-  <play-view ref="playViewShowHide"></play-view>
+  <play-view ref="playView"></play-view>
 </template>
 
 <script type="text/ecmascript-6">
@@ -42,8 +42,9 @@ export default {
     this.$store.commit('musicPlay/setPlayingState',false) 
   },
   computed: { 
-    ...mapState('musicPlay',['playList','currentIndex','sequenceList','playing','change','tmpCurrentTime','playMode','nextPlay','cutover']),
+    ...mapState('musicPlay',['playList','currentIndex','sequenceList','playing','change','tmpCurrentTime','playMode','nextPlay','cutover','playViewHideFlag']),
     ...mapGetters('musicPlay',['playUrl','currentTime','currentSong'])
+
   }, 
   setup() {
     const store = useStore()
@@ -81,9 +82,10 @@ export default {
     })
   },
   methods: {
-    aaa() {
-      console.log('aaa-----------------===========');
+    queryLyrics() {
+      this.$refs['playView'].getLyric()
     },
+
     playListShow() {
         this.$store.commit('musicPlay/playListHideFlag',true) 
     },

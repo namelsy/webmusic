@@ -17,15 +17,17 @@
       </template>
     </nav-bar>
     <control-bar></control-bar>
-    <main-list-display :songListDetailData="songListDetailData"></main-list-display>
-    <!-- <Player></Player> -->
+    <main-list-display :songListDetailData="songListDetailData" @onClickSongList="clickSongList"></main-list-display>
+
+     <Player ref="player"></Player>
+
 </template>
 
 <script type="text/ecmascript-6">
 import NavBar from '@/components/common/navBar/NavBar.vue'
 import ControlBar from './songListDetailChild/ControlBar'
 import MainListDisplay from './songListDetailChild/MainListDisplay'
-// import Player from '@/components/content/player/Player'
+import Player from '@/components/content/player/Player'
 
 import {songListDetail,dynamic} from "network/detail"
 import store from '@/store'
@@ -41,7 +43,7 @@ export default {
     NavBar,
     ControlBar,
     MainListDisplay,
-    // Player
+    Player
   },
   created() {
     this.id = this.$route.params.id
@@ -62,6 +64,10 @@ export default {
     dynamic() {
       dynamic(this.id).then(res => {
       })
+    },
+
+    clickSongList() {
+      this.$refs['player'].queryLyrics()
     }
   }
 }

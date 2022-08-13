@@ -196,6 +196,7 @@ export default {
             }
           }
         }
+        this.$emit('aaaa')
     },
     PlayMode(type) {
       let audioRef = this.$parent.$parent.$refs.audioRef

@@ -71,7 +71,7 @@ export default {
         this.$store.dispatch('musicPlay/addAllPlay',{list,playIndex}) 
         this.$store.commit('musicPlay/playViewHideFlag',true) 
       })
-      console.log(this,'parent ================');
+      this.$emit('onClickSongList')
     },
     ActionSheetShow(index) {
       this.selectSong = this.songListDetailData[index]

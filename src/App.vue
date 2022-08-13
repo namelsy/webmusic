@@ -5,7 +5,6 @@
         <component :is="Component" />
       </keep-alive>
     </router-view>
-    <Player ref="player" ></Player>
     <MainTabBar v-if="$route.meta.tabBar"></MainTabBar>
   </div>
 </template>
