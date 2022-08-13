@@ -1,7 +1,7 @@
 <template>
   <div class="MainListDisplay">
     <list-display>
-      <list-display-item v-for="(item,index) in songListDetailData" :key="item.id" @click="songDetail(item.id)" :class="{bgColor:index == currentIndex}">
+      <list-display-item v-for="(item,index) in songListDetailData" :key="item.id" @click="querySongDetail(item.id)" :class="{bgColor:index == currentIndex}">
         <template #listDisplayItemNow>
           {{index + 1}}
         </template>
@@ -59,24 +59,23 @@ export default {
     ...mapState('musicPlay',['playList','currentIndex','sequenceList','playing']),
   }, 
   methods: {
-    songDetail(id) {
-      // let idArray = this.songListDetailData.reduce((total,val) => {
-      //   return total !=0 ? total + ',' + val.id : val.id
-      // },0)
-
+    querySongDetail(id) {
       //查找指定ID的索引
       let list = this.songListDetailData
       let playIndex = (list || []).findIndex((songListDetailData) => songListDetailData.id === id)
       songDetail(id).then(res => {
+        console.log(res,'res');
+        console.log(list,'list');
+        console.log(playIndex,'playIndex');
         this.$store.commit('musicPlay/Cutover', true);
         this.$store.dispatch('musicPlay/addAllPlay',{list,playIndex}) 
         this.$store.commit('musicPlay/playViewHideFlag',true) 
       })
+      console.log(this,'parent ================');
     },
     ActionSheetShow(index) {
       this.selectSong = this.songListDetailData[index]
       this.$store.commit('musicPlay/actionSheetHideFlag',true) 
-        
     },
   }
 }

@@ -81,6 +81,9 @@ export default {
     })
   },
   methods: {
+    aaa() {
+      console.log('aaa-----------------===========');
+    },
     playListShow() {
         this.$store.commit('musicPlay/playListHideFlag',true) 
     },

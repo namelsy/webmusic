@@ -72,12 +72,14 @@ export default {
     
   },
   created() {
+    console.log('created');
     if(this.sequenceList.length>0 && this.currentIndex) {
       this.sequenceList[this.currentIndex].id
       this.getLyric()
     }
   },  
   mounted() {
+    console.log('mounted');
     if(this.sequenceList.length>0) {
       this.picUrl = this.sequenceList[this.currentIndex].al.picUrl
     }
@@ -95,11 +97,10 @@ export default {
     //获取歌词
     getLyric() {
       let id = this.sequenceList[this.currentIndex].id
-      console.log(id)
+      console.log(id,'id')
       getLyricData(id).then(res=>{
         if(res.data.code == 200) {
           let lyric = res.data.lrc.lyric
-          console.log(lyric)
           let regNewLine = /\n/
           let LineArr = lyric.split(regNewLine)
           console.log(LineArr)
@@ -109,7 +110,7 @@ export default {
             let obj = {}
             let time = item.match(regTime)
             obj.lyric = item.split(']')[1].trim() === '' ? '' : item.split(']')[1].trim()
-            obj.time = time ? time : ''
+            obj.time = time ? this.forLyricTime(time[0].slice(1,time[0].length - 1)) : 0
             obj.uid = Math.random().toString().slice(-6)
             if(obj.lyric == '') {
               console.log('此行没有歌词')
@@ -118,10 +119,22 @@ export default {
               this.lyricObjArr.push(obj)
             }
           });
-          console.log(this.lyricObjArr)
+          console.log(this.lyricObjArr,'this.lyricObjArr')
         }
       })
     },
+    forLyricTime (time) {
+      let regMin = /.*:/
+      let regSec = /:.*\./
+      let gegMs =  /\./
+      let min = parseInt(time.match(regMin)[0].slice(0,2))
+      let sec = parseInt(time.match(regSec)[0].slice(1,3))
+      let ms = parseInt(time.match(gegMs).index + 1,time.match(gegMs).index + 3)
+      if(min !==0) {
+        sec += min *60
+      }
+      return Number(sec)
+    }
   }
 }
 </script>

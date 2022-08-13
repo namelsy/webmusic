@@ -1,14 +1,16 @@
 <template>
   <div class="playMsg">
-    <list-display class="playMsgList">
-      <list-display-item v-for="item in lyricObjArr" :key="item.uid" :class="{bgColor:index == currentIndex}">
-        <template #listDisplayItemMsg>
-          <div class="LyricShow">
-            {{item.lyric}}
-          </div>
-        </template>
-      </list-display-item>
-    </list-display>
+    <transition name="playMsgList">
+      <list-display class="playMsgList" @click="a" id="playMsgList" ref="playMsgList">
+        <list-display-item v-for="(item,index) in lyricObjArr" :key="item.uid">
+          <template #listDisplayItemMsg>
+            <div class="LyricShow" :class="{bgColor:alignInex == index}">
+              {{item.lyric}}
+            </div>
+          </template>
+        </list-display-item>
+      </list-display>
+    </transition>
   </div>
 
 </template>
@@ -17,10 +19,12 @@
 import ListDisplay from '../listDisplay/ListDisplay'
 import ListDisplayItem from '../listDisplay/ListDisplayItem'
 
+import { mapGetters, mapMutations, mapState,useStore } from 'vuex'
+import { watch,getCurrentInstance } from 'vue'
 export default {
   data() {
     return {
-
+      alignInex: 0
     }
   },
   components: {
@@ -35,29 +39,88 @@ export default {
       }
     },
   },
+  computed: {
+    ...mapState('musicPlay',['playList','currentIndex','sequenceList','playViewHideFlag','currentTime']),
+    ...mapGetters('musicPlay',[ 'prCurrentTime',]), 
+  }, 
+  setup() {
+    const store = useStore()
+    const that = getCurrentInstance()
+    console.log(that.props.lyricObjArr)
+    watch(()=>store.state.musicPlay.currentTime, (newVal)=> {
+      if(newVal) {
+        // let scroll = document.getElementById('playMsgList')
+        // console.log(scroll.scrollTop,scroll.scrollHeight)
+        // let prCurrentTime = store.state.musicPlay.currentTime/store.state.musicPlay.durationTime * 100
+        // scroll.scrollTop  = prCurrentTime/100 * scroll.scrollHeight
+        // console.log(scroll.scrollTop)
+
+        let lyricObjArr = that.props.lyricObjArr
+        lyricObjArr.forEach((item,index) => {
+          if(store.state.musicPlay.currentTime == item.time) {
+            let prCurrentTime = store.state.musicPlay.currentTime/store.state.musicPlay.durationTime * 100
+            let scroll = document.getElementById('playMsgList')
+            scroll.style = `
+            transition: all linear 0.7s;
+            transform: translateY(${-50 * index}px)
+            `
+            // scroll.scrollTop  = prCurrentTime/100 * scroll.scrollHeight - 400 
+            // console.log(scroll.scrollTop,scroll.scrollHeight)
+            let alignInex = index
+            return that.data.alignInex = alignInex
+          }
+        });
+      }
+    },{deep:true})
+  },
   mounted() {
-      console.log(this)
-    }
+    // let item = document.getElementById('playMsgList')
+    
+    // console.log(this.$refs.playMsgList.$el.children)
+    // item.style.transform = `translateY(${-100}px)`
+  },
+  updated() {
+    console.log(this)
+  },
+  methods: {
+  }
 }
 </script>
 
-<style scoped>
+<style scoped lang="less">
   .playMsg {
     height: 60%;
     position: fixed;
     top: 8%;
     width: 100%;
     z-index: 9999;
+    overflow-y: scroll;
+    overflow-x: hidden;
   }
   .LyricShow {
     display: flex;
     justify-content: center;
-    color: aliceblue;
+    color: #ccc;
+  }
+  .playMsgList {
+    overflow: visible;
   }
   .playMsgList>:first-child {
-       margin-top: 50%;
+       margin-top: calc(50% - 25px) ;
   }
   .playMsgList>:last-child {
        margin-bottom: 50%;
   }
+  .bgColor {
+    color: #fff;
+  }
+
+   //动画 
+  .playMsgList-enter-active {
+    animation: playMsgList 0.2s linear;
+  }
+  .playMsgList-leave-active {
+    animation: playMsgList 0.2s linear reverse;
+  }
+
 </style>

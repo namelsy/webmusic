@@ -1,5 +1,5 @@
 <template>
-  <div class="listDisplayItem">
+  <li class="listDisplayItem">
     <div v-if="1" class="listDisplayItemNum">
       <slot name="listDisplayItemNow"></slot>
     </div>
@@ -12,7 +12,7 @@
     <div class="listDisplayItemMore">
       <slot name="listDisplayItemMore"></slot>
     </div>
-  </div>
+  </li>
 </template>
 
 <script type="text/ecmascript-6">
