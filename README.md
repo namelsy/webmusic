@@ -16,5 +16,5 @@ npm run build
 ```
 
 ### Customize configuration
-### 1111111111111
+### 12
 See [Configuration Reference](https://cli.vuejs.org/config/).
