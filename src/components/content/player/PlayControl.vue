@@ -49,20 +49,16 @@
 </template>
 
 <script type="text/ecmascript-6">
-import NavBar from '@/components/common/navBar/NavBar'
-
-import { ref,getCurrentInstance, useContext,watch, } from 'vue';
-import { mapGetters, mapMutations, mapState,useStore } from 'vuex'
+import { getCurrentInstance, watch } from 'vue';
+import { mapGetters, mapState, useStore } from 'vuex'
 export default {
   data() {
     return {
       duration: '00:00',
     }
   },
-  components: {
 
-  },
-  computed: { 
+  computed: {
     ...mapState('musicPlay',[
         'playList',
         'currentIndex',
@@ -122,8 +118,8 @@ export default {
     //     }
     //   }
     // })
-    
   },
+
   methods: {
     seeked() {
       let audioRef = this.$parent.$parent.$refs.audioRef
@@ -196,6 +192,7 @@ export default {
             }
           }
         }
+        this.$emit('aaaa')
     },
     PlayMode(type) {
       let audioRef = this.$parent.$parent.$refs.audioRef

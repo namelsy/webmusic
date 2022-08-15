@@ -17,8 +17,8 @@
               <img src="~assets/images/icon/share/more.png" alt="">
           </template>
         </nav-bar>
-        <PlayMsg :lyricObjArr="lyricObjArr"></PlayMsg>
-        <PlayControl></PlayControl>
+        <PlayMsg v-show="showLyric" :lyricObjArr="lyricObjArr"></PlayMsg>
+        <PlayControl @aaaa="getLyric"></PlayControl>
       </div>
     </div>
   </transition>
@@ -37,7 +37,8 @@ export default {
   data() {
     return {
       picUrl:'',
-      lyricObjArr:[]
+      lyricObjArr:[],
+      showLyric: false
     }
   },
   components: {
@@ -72,11 +73,11 @@ export default {
     
   },
   created() {
-    console.log('created');
-    if(this.sequenceList.length>0 && this.currentIndex) {
-      this.sequenceList[this.currentIndex].id
-      this.getLyric()
-    }
+    // console.log('created');
+    // if(this.sequenceList.length>0 && this.currentIndex) {
+    //   this.sequenceList[this.currentIndex].id
+    //   this.getLyric()
+    // }
   },  
   mounted() {
     console.log('mounted');
@@ -96,10 +97,12 @@ export default {
 
     //获取歌词
     getLyric() {
+      this.showLyric = false
       let id = this.sequenceList[this.currentIndex].id
       console.log(id,'id')
       getLyricData(id).then(res=>{
         if(res.data.code == 200) {
+          this.showLyric = true
           let lyric = res.data.lrc.lyric
           let regNewLine = /\n/
           let LineArr = lyric.split(regNewLine)

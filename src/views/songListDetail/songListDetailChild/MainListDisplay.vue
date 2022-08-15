@@ -32,9 +32,7 @@ import ListDisplay from '@/components/content/listDisplay/ListDisplay'
 import ListDisplayItem from '@/components/content/listDisplay/ListDisplay'
 import ActionSheet from '@/components/content/actionSheet/ActionSheet'                    
 
-import {player,songDetail} from "network/detail"
-import { mapGetters,mapState } from 'vuex'
-import { ref } from 'vue';
+import { mapState } from 'vuex'
 export default {
   props: {
     songListDetailData: {
@@ -63,15 +61,10 @@ export default {
       //查找指定ID的索引
       let list = this.songListDetailData
       let playIndex = (list || []).findIndex((songListDetailData) => songListDetailData.id === id)
-      songDetail(id).then(res => {
-        console.log(res,'res');
-        console.log(list,'list');
-        console.log(playIndex,'playIndex');
-        this.$store.commit('musicPlay/Cutover', true);
-        this.$store.dispatch('musicPlay/addAllPlay',{list,playIndex}) 
-        this.$store.commit('musicPlay/playViewHideFlag',true) 
-      })
-      console.log(this,'parent ================');
+      this.$store.commit('musicPlay/Cutover', true);
+      this.$store.dispatch('musicPlay/addAllPlay',{list,playIndex})
+      this.$store.commit('musicPlay/playViewHideFlag',true)
+      this.$emit('onClickSongList')
     },
     ActionSheetShow(index) {
       this.selectSong = this.songListDetailData[index]
