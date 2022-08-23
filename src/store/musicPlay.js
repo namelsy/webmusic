@@ -191,7 +191,6 @@ export default {
     durationTime: state => {
         state.durationTime
     //   let durationTime = state.durationTime
-    //   console.log('durationTime'.state)
     //   let long = Math.floor(parseInt(durationTime));
     //   let minute = Math.floor(durationTime / 60);
     //   if (minute < 10) {
@@ -201,7 +200,6 @@ export default {
     //   if (second < 10) {
     //     second = '0' + second;
     //   }
-    //   console.log(minute + ':' + second)
     //   return minute + ':' + second;
     },
     playUrl: state => {
@@ -251,7 +249,6 @@ export default {
     },
     updateDurationTime (state, time) {
         state.durationTime = time;
-        console.log(state.durationTime)
     },
     setChange (state, flag) {
         state.change = flag;

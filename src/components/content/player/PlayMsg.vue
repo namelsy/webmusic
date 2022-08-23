@@ -46,14 +46,11 @@ export default {
   setup() {
     const store = useStore()
     const that = getCurrentInstance()
-    console.log(that.props.lyricObjArr)
     watch(()=>store.state.musicPlay.currentTime, (newVal)=> {
       if(newVal) {
         // let scroll = document.getElementById('playMsgList')
-        // console.log(scroll.scrollTop,scroll.scrollHeight)
         // let prCurrentTime = store.state.musicPlay.currentTime/store.state.musicPlay.durationTime * 100
         // scroll.scrollTop  = prCurrentTime/100 * scroll.scrollHeight
-        // console.log(scroll.scrollTop)
 
         let lyricObjArr = that.props.lyricObjArr
         lyricObjArr.forEach((item,index) => {
@@ -65,7 +62,6 @@ export default {
             transform: translateY(${-50 * index}px)
             `
             // scroll.scrollTop  = prCurrentTime/100 * scroll.scrollHeight - 400 
-            // console.log(scroll.scrollTop,scroll.scrollHeight)
             let alignInex = index
             return that.data.alignInex = alignInex
           }
@@ -76,11 +72,9 @@ export default {
   mounted() {
     // let item = document.getElementById('playMsgList')
     
-    // console.log(this.$refs.playMsgList.$el.children)
     // item.style.transform = `translateY(${-100}px)`
   },
   updated() {
-    console.log(this)
   },
   methods: {
   }

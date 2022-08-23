@@ -60,7 +60,6 @@ export default {
   setup() {
     const store = useStore()
     const that = getCurrentInstance()
-    console.log(store.state.musicPlay.currentIndex)
     watch(()=>store.state.musicPlay.currentIndex, (newVal)=> {
       if(newVal || newVal == 0) {
         let img = new  Image()
@@ -73,14 +72,12 @@ export default {
     
   },
   created() {
-    // console.log('created');
     // if(this.sequenceList.length>0 && this.currentIndex) {
     //   this.sequenceList[this.currentIndex].id
     //   this.getLyric()
     // }
   },  
   mounted() {
-    console.log('mounted');
     if(this.sequenceList.length>0) {
       this.picUrl = this.sequenceList[this.currentIndex].al.picUrl
     }
@@ -99,14 +96,12 @@ export default {
     getLyric() {
       this.showLyric = false
       let id = this.sequenceList[this.currentIndex].id
-      console.log(id,'id')
       getLyricData(id).then(res=>{
         if(res.data.code == 200) {
           this.showLyric = true
           let lyric = res.data.lrc.lyric
           let regNewLine = /\n/
           let LineArr = lyric.split(regNewLine)
-          console.log(LineArr)
           const regTime = /\[\d{2}:\d{2}.\d{2,3}\]/
           LineArr.forEach(item => {
             if(item == '') return
@@ -116,13 +111,11 @@ export default {
             obj.time = time ? this.forLyricTime(time[0].slice(1,time[0].length - 1)) : 0
             obj.uid = Math.random().toString().slice(-6)
             if(obj.lyric == '') {
-              console.log('此行没有歌词')
             }
             else {
               this.lyricObjArr.push(obj)
             }
           });
-          console.log(this.lyricObjArr,'this.lyricObjArr')
         }
       })
     },
