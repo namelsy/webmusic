@@ -77,17 +77,15 @@ export default {
     
   },
   created() {
-    console.log('created');
-    if(this.sequenceList.length>0 && this.currentIndex) {
-      this.sequenceList[this.currentIndex].id
-      this.getLyric()
-    }
+    // if(this.sequenceList.length>0 && this.currentIndex) {
+    //   this.sequenceList[this.currentIndex].id
+    //   this.getLyric()
+    // }
   },  
   beforeUpdate() {
     // this.methods.getLyric()
   },
   mounted() {
-    console.log('mounted');
     if(this.sequenceList.length>0) {
       this.picUrl = this.sequenceList[this.currentIndex].al.picUrl
     }
@@ -113,7 +111,6 @@ export default {
           let lyric = res.data.lrc.lyric
           let regNewLine = /\n/
           let LineArr = lyric.split(regNewLine)
-          console.log(LineArr)
           const regTime = /\[\d{2}:\d{2}.\d{2,3}\]/
           LineArr.forEach(item => {
             if(item == '') return
@@ -123,7 +120,6 @@ export default {
             obj.time = time ? this.forLyricTime(time[0].slice(1,time[0].length - 1)) : 0
             obj.uid = Math.random().toString().slice(-6)
             if(obj.lyric == '') {
-              console.log('此行没有歌词')
             }
             else {
               lyricObjArr.push(obj)

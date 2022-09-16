@@ -121,8 +121,7 @@ export default {
     durationchange(res) {
       let duration = res.target.duration
       if (duration > 0) {
-      console.log(duration,parseInt(duration))
-        this.$store.commit('musicPlay/updateDurationTime',parseInt(duration)) 
+        this.$store.commit('musicPlay/updateDurationTime',parseInt(duration))
       }
     },
     updateTime() {

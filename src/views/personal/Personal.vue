@@ -56,7 +56,6 @@ export default {
   methods: {
     loginStatus() {
       loginStatus().then(res=> {
-        console.log(res)
       })
     },  
     //用户登录
