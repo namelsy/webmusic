@@ -136,7 +136,6 @@ export default {
       // that.$store.commit('musicPlay/updateCurrentTime', time);
     },
     async updatePlayingStatus(status) {
-      console.log(this)
       let audioRef = this.$parent.$parent.$parent.$refs.audioRef
       try {
         if(audioRef.paused) {
