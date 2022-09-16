@@ -17,8 +17,8 @@
               <img src="~assets/images/icon/share/more.png" alt="">
           </template>
         </nav-bar>
-        <PlayMsg :lyricObjArr="lyricObjArr"></PlayMsg>
-        <PlayControl></PlayControl>
+        <PlayMsg v-show="showLyric" :lyricObjArr="lyricObjArr"></PlayMsg>
+        <PlayControl @getLyric="getLyric"></PlayControl>
       </div>
     </div>
   </transition>
@@ -31,13 +31,14 @@ import PlayMsg from '@/components/content/player/PlayMsg'
 
 
 import { mapState,useStore } from 'vuex'
-import { watch,getCurrentInstance } from 'vue'
+import { watch,getCurrentInstance, watchEffect } from 'vue'
 import { getLyricData } from '@/network/detail'
 export default {
   data() {
     return {
       picUrl:'',
-      lyricObjArr:[]
+      lyricObjArr:[],
+      showLyric: false
     }
   },
   components: {
@@ -59,7 +60,7 @@ export default {
   setup() {
     const store = useStore()
     const that = getCurrentInstance()
-    console.log(store.state.musicPlay.currentIndex)
+    console.log(that)
     watch(()=>store.state.musicPlay.currentIndex, (newVal)=> {
       if(newVal || newVal == 0) {
         let img = new  Image()
@@ -69,6 +70,10 @@ export default {
         }
       }
     })  
+    watchEffect(() => {
+      store.state.musicPlay.currentIndex
+      that.type.beforeUpdate()
+    })
     
   },
   created() {
@@ -78,6 +83,9 @@ export default {
       this.getLyric()
     }
   },  
+  beforeUpdate() {
+    // this.methods.getLyric()
+  },
   mounted() {
     console.log('mounted');
     if(this.sequenceList.length>0) {
@@ -96,10 +104,12 @@ export default {
 
     //获取歌词
     getLyric() {
+      this.showLyric = false
       let id = this.sequenceList[this.currentIndex].id
-      console.log(id,'id')
+      var lyricObjArr = []
       getLyricData(id).then(res=>{
         if(res.data.code == 200) {
+          this.showLyric = true
           let lyric = res.data.lrc.lyric
           let regNewLine = /\n/
           let LineArr = lyric.split(regNewLine)
@@ -116,9 +126,10 @@ export default {
               console.log('此行没有歌词')
             }
             else {
-              this.lyricObjArr.push(obj)
+              lyricObjArr.push(obj)
             }
           });
+          this.lyricObjArr = lyricObjArr
           console.log(this.lyricObjArr,'this.lyricObjArr')
         }
       })
